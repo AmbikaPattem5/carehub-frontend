@@ -1,4 +1,4 @@
-import type { CommonType } from "./CommomTypes";
+import type { CommonType } from "./CommonTypes";
 import type { User } from "./UserType";
 export type LoginRequestType = {
     email: string,

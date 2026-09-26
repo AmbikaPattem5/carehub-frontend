@@ -1,5 +1,5 @@
 import axios from "axios";
-import useAuth from "../CusttommHooks/useAuth";
+import useAuth from "../CustomHooks/useAuth";
 const api = axios.create({
     baseURL: "http://localhost:5000/api",
     headers: {
