@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { LoginRequestType } from "../types/LoginType";
 import api from "../services/api";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png"
 import toast from "react-hot-toast"
+import useAuth from "../CustomHooks/useAuth";
 function Login() {
     const [formData, setFormData] = useState<LoginRequestType>({ email: '', password: '' })
     const navigate = useNavigate()
+    const { login } = useAuth();
+    useEffect(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+    }, [])
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
     const defaultCredentials = {
         "admin": { email: "admin@carehub.com", password: "password123" },
         "doctor": { email: "doctor@carehub.com", password: "password123" },
@@ -26,15 +30,14 @@ function Login() {
             const response = await api.post("auth/login", form)
             console.log(response.data)
             if (response && response.data.success) {
-                localStorage.setItem("token", response.data.token)
-                localStorage.setItem("user", response.data.user.name)
+                login(response.data.token, response.data.user.name)
                 toast.success("Login successful")
-                navigate('/dashboard')
+                navigate('/')
             }
             console.log(response)
         }
         catch (err: any) {
-            toast.error(err.response.data.message)
+            toast.error(err?.response?.data?.message || "Something went wrong.Please try again")
             console.log(err)
         }
 

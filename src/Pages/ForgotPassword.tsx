@@ -26,9 +26,8 @@ function ForgotPassword() {
 
             }
         }
-        catch (err) {
-            toast.error(err.response.data.message)
-
+        catch (err: any) {
+            toast.error(err?.response?.data?.message || "Something went wrong.Please try again")
         }
 
     }
@@ -41,7 +40,7 @@ function ForgotPassword() {
             }
         }
         catch (err) {
-            toast.error(err.response.data.message)
+            toast.error(err?.response?.data?.message || "Something went wrong.Please try again")
         }
     }
     return (
